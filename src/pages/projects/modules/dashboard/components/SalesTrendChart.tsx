@@ -1,4 +1,4 @@
-import ReactECharts from 'echarts-for-react';
+import { ReactECharts } from '../../../../../components/charts/ReactECharts';
 
 interface SalesTrendChartProps {
   data: {
@@ -46,7 +46,7 @@ export function SalesTrendChart({ data }: SalesTrendChartProps) {
       axisLabel: {
         color: '#94a3b8',
         formatter: (value: number) => {
-          return value >= 1000000 ? `${(value / 10000).toFixed(0)}万` : value;
+          return value >= 1000000 ? `${(value / 10000).toFixed(0)}万` : `${value}`;
         }
       },
       splitLine: {

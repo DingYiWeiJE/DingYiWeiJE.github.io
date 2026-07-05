@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { EnterpriseLayout } from '../../components/visualization/EnterpriseLayout';
-import { DashboardPage } from './modules/dashboard/DashboardPage';
 import { useLayout } from '../../contexts/LayoutContext';
 import type { ModuleType } from '../../types/visualization';
+
+// 懒加载 Dashboard 模块
+const DashboardPage = lazy(() => import('./modules/dashboard/DashboardPage').then(m => ({ default: m.DashboardPage })));
 
 export function ProjectsPage() {
   const [currentModule, setCurrentModule] = useState<ModuleType>('dashboard');
@@ -25,7 +27,20 @@ export function ProjectsPage() {
       activeModule={currentModule}
       onModuleChange={(id) => setCurrentModule(id as ModuleType)}
     >
-      {currentModule === 'dashboard' && <DashboardPage />}
+      {currentModule === 'dashboard' && (
+        <Suspense fallback={
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent" role="status">
+                <span className="sr-only">加载中...</span>
+              </div>
+              <p className="mt-2 text-slate-400">加载仪表板...</p>
+            </div>
+          </div>
+        }>
+          <DashboardPage />
+        </Suspense>
+      )}
 
       {currentModule === 'ai-platform' && (
         <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">

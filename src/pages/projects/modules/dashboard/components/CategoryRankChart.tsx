@@ -1,4 +1,4 @@
-import ReactECharts from 'echarts-for-react';
+import { ReactECharts } from '../../../../../components/charts/ReactECharts';
 
 interface CategoryRankChartProps {
   data: { name: string; value: number }[];
@@ -16,7 +16,8 @@ export function CategoryRankChart({ data }: CategoryRankChartProps) {
       textStyle: {
         color: '#e2e8f0'
       },
-      formatter: (params: { name: string; value: number }[]) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      formatter: (params: any) => {
         const item = params[0];
         return `${item.name}<br/>销售额: ¥${(item.value / 10000).toFixed(1)}万`;
       }
