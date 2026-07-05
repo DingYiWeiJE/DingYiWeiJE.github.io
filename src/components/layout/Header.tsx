@@ -50,7 +50,7 @@ export function Header() {
 
           <span className="min-w-0">
             <span className="block truncate text-sm font-semibold tracking-wide text-white">
-              Ding Yiwei
+              丁志鹏
             </span>
             <span className="block truncate font-mono text-[11px] text-slate-400">
               前端架构 / 可视化 / 跨端开发

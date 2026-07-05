@@ -102,7 +102,7 @@ export function HomePage() {
 
           <Card className="hero-profile-card">
             <p className="hero-profile-card__label">开发者档案</p>
-            <h2>Ding Yiwei</h2>
+            <h2>丁志鹏</h2>
             <p>前端 / 跨平台工程师</p>
 
             <div className="hero-profile-card__divider" />
