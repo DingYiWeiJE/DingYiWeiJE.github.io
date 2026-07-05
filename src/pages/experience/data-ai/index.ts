@@ -1,0 +1,1 @@
+export { DataAIPage } from './DataAIPage';

@@ -3,8 +3,9 @@ import { EnterpriseLayout } from '../../components/visualization/EnterpriseLayou
 import { useLayout } from '../../contexts/LayoutContext';
 import type { ModuleType } from '../../types/visualization';
 
-// 懒加载 Dashboard 模块
+// 懒加载模块
 const DashboardPage = lazy(() => import('./modules/dashboard/DashboardPage').then(m => ({ default: m.DashboardPage })));
+const DataAIPage = lazy(() => import('../experience/data-ai').then(m => ({ default: m.DataAIPage })));
 
 export function ProjectsPage() {
   const [currentModule, setCurrentModule] = useState<ModuleType>('dashboard');
@@ -43,10 +44,18 @@ export function ProjectsPage() {
       )}
 
       {currentModule === 'ai-platform' && (
-        <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
-          <h2 className="text-2xl font-bold text-white">AI数据平台</h2>
-          <p className="mt-2 text-slate-400">展示AI模型训练、ETL工作流、数据集管理等功能。</p>
-        </div>
+        <Suspense fallback={
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent" role="status">
+                <span className="sr-only">加载中...</span>
+              </div>
+              <p className="mt-2 text-slate-400">加载AI平台...</p>
+            </div>
+          </div>
+        }>
+          <DataAIPage />
+        </Suspense>
       )}
 
       {currentModule === 'finance' && (

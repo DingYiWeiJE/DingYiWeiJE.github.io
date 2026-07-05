@@ -28,7 +28,7 @@ export const NAVIGATION_MENU: MenuItem[] = [
       </svg>
     ),
     path: '/projects/ai-platform',
-    badge: 'New'
+    badge: 'AI助理'
   },
   {
     id: 'finance',
