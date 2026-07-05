@@ -39,6 +39,10 @@ export function DashboardPage() {
     };
 
     loadData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (loading || !data) {
