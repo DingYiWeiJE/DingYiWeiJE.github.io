@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router';
+import { NavLink } from 'react-router';
 
 import { Container } from './Container';
 
 const navItems = [
   { label: '项目', to: '/projects' },
-  { label: '实验室', to: '/labs' },
   { label: '开源', to: '/open-source' },
   { label: '关于', to: '/about' },
   { label: '联系', to: '/contact' },
@@ -13,11 +12,8 @@ const navItems = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
 
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location.pathname]);
+  const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -27,7 +23,7 @@ export function Header() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setIsMenuOpen(false);
+        closeMenu();
       }
     };
 
@@ -53,7 +49,7 @@ export function Header() {
 
           <span className="min-w-0">
             <span className="block truncate text-sm font-semibold tracking-wide text-white">
-              Ding Yiwei
+              丁志鹏
             </span>
             <span className="block truncate font-mono text-[11px] text-slate-400">
               前端架构 / 可视化 / 跨端开发
@@ -66,6 +62,7 @@ export function Header() {
             <NavLink
               key={item.to}
               to={item.to}
+              onClick={closeMenu}
               className={({ isActive }) =>
                 [
                   'rounded-full px-3 py-2 text-sm font-medium transition-colors',
@@ -117,7 +114,7 @@ export function Header() {
             type="button"
             className="fixed inset-0 top-16 z-40 bg-slate-950/70 backdrop-blur-sm md:hidden"
             aria-label="关闭导航菜单"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={closeMenu}
           />
 
           <div
@@ -129,6 +126,7 @@ export function Header() {
                 <NavLink
                   key={item.to}
                   to={item.to}
+                  onClick={closeMenu}
                   className={({ isActive }) =>
                     [
                       'block rounded-2xl border px-4 py-3 text-sm font-semibold transition-colors',

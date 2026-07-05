@@ -5,7 +5,6 @@ import { Card } from '../../components/ui/Card';
 import { SectionHeading } from '../../components/ui/SectionHeading';
 import { projects } from '../../features/projects/data/projects';
 import { openSourcePackages } from '../../features/open-source/data/packages';
-import { labs } from '../../features/labs/data/labs';
 
 const techStack = [
   'React',
@@ -85,11 +84,11 @@ export function HomePage() {
 
             <div className="hero-section__actions">
               <Button href="/projects">View Projects</Button>
-              <Button href="/labs" variant="secondary">
-                Explore Labs
-              </Button>
-              <Button href="/open-source" variant="ghost">
+              <Button href="/open-source" variant="secondary">
                 Open Source
+              </Button>
+              <Button href="/contact" variant="ghost">
+                Contact Me
               </Button>
             </div>
 
@@ -102,7 +101,7 @@ export function HomePage() {
 
           <Card className="hero-profile-card">
             <p className="hero-profile-card__label">开发者档案</p>
-            <h2>Ding Yiwei</h2>
+            <h2>丁志鹏</h2>
             <p>前端 / 跨平台工程师</p>
 
             <div className="hero-profile-card__divider" />
@@ -194,35 +193,6 @@ export function HomePage() {
                 <a href={pkg.npmUrl} target="_blank" rel="noreferrer">
                   View on npm →
                 </a>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="section">
-        <Container>
-          <SectionHeading
-            eyebrow="实验室"
-            title="不断增长的视觉、实时和WebGL实验场所。"
-            description="这里将展示Three.js、D3.js、Canvas、Konva、WebSocket、AI和Unity WebGL演示。"
-          />
-
-          <div className="lab-grid">
-            {labs.map((lab) => (
-              <Card key={lab.title} className="lab-card">
-                <div className="lab-card__top">
-                  <p className="card-kicker">{lab.category}</p>
-                  <Badge>{lab.status}</Badge>
-                </div>
-                <h3>{lab.title}</h3>
-                <p>{lab.description}</p>
-
-                <div className="card-badges">
-                  {lab.techStack.map((tech) => (
-                    <Badge key={tech}>{tech}</Badge>
-                  ))}
-                </div>
               </Card>
             ))}
           </div>
