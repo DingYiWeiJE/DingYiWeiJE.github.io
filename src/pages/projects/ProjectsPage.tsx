@@ -1,15 +1,18 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useEffect } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import { EnterpriseLayout } from '../../components/visualization/EnterpriseLayout';
 import { useLayout } from '../../contexts/LayoutContext';
-import type { ModuleType } from '../../types/visualization';
-
-// 懒加载模块
-const DashboardPage = lazy(() => import('./modules/dashboard/DashboardPage').then(m => ({ default: m.DashboardPage })));
-const DataAIPage = lazy(() => import('../experience/data-ai').then(m => ({ default: m.DataAIPage })));
+import { NAVIGATION_MENU } from '../../config/navigation';
 
 export function ProjectsPage() {
-  const [currentModule, setCurrentModule] = useState<ModuleType>('dashboard');
   const { setShowHeader, setShowFooter } = useLayout();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // 根据路由获取当前激活的模块
+  const activeModule = NAVIGATION_MENU.find(
+    item => item.path && location.pathname.startsWith(item.path)
+  )?.id || '';
 
   useEffect(() => {
     // 进入页面时隐藏 Header 和 Footer
@@ -23,65 +26,28 @@ export function ProjectsPage() {
     };
   }, [setShowHeader, setShowFooter]);
 
+  // 处理模块切换
+  const handleModuleChange = (moduleId: string) => {
+    const menuItem = NAVIGATION_MENU.find(item => item.id === moduleId);
+    if (menuItem?.path) {
+      navigate(menuItem.path);
+    }
+  };
+
+  // 如果在 /projects 根路径，不使用 EnterpriseLayout
+  const isIndexPage = location.pathname === '/projects' || location.pathname === '/projects/';
+
+  if (isIndexPage) {
+    return <Outlet />;
+  }
+
+  // 子页面使用 EnterpriseLayout
   return (
     <EnterpriseLayout
-      activeModule={currentModule}
-      onModuleChange={(id) => setCurrentModule(id as ModuleType)}
+      activeModule={activeModule}
+      onModuleChange={handleModuleChange}
     >
-      {currentModule === 'dashboard' && (
-        <Suspense fallback={
-          <div className="flex items-center justify-center min-h-[400px]">
-            <div className="text-center">
-              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent" role="status">
-                <span className="sr-only">加载中...</span>
-              </div>
-              <p className="mt-2 text-slate-400">加载仪表板...</p>
-            </div>
-          </div>
-        }>
-          <DashboardPage />
-        </Suspense>
-      )}
-
-      {currentModule === 'ai-platform' && (
-        <Suspense fallback={
-          <div className="flex items-center justify-center min-h-[400px]">
-            <div className="text-center">
-              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent" role="status">
-                <span className="sr-only">加载中...</span>
-              </div>
-              <p className="mt-2 text-slate-400">加载AI平台...</p>
-            </div>
-          </div>
-        }>
-          <DataAIPage />
-        </Suspense>
-      )}
-
-      {currentModule === 'finance' && (
-        <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
-          <h2 className="text-2xl font-bold text-white">金融交易系统</h2>
-          <p className="mt-2 text-slate-400">实时股票行情、K线图表、深度图等。</p>
-        </div>
-      )}
-
-      {currentModule === 'mes' && (
-        <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
-          <h2 className="text-2xl font-bold text-white">工业MES系统</h2>
-          <p className="mt-2 text-slate-400">设备监控、工艺流程、告警管理等。</p>
-        </div>
-      )}
-
-      {['hmi', 'im', '3d'].includes(currentModule) && (
-        <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
-          <h2 className="text-2xl font-bold text-white">
-            {currentModule === 'hmi' && 'HMI控制系统'}
-            {currentModule === 'im' && '实时通信IM'}
-            {currentModule === '3d' && '三维可视化'}
-          </h2>
-          <p className="mt-4 text-slate-400">该模块功能正在规划中，敬请期待...</p>
-        </div>
-      )}
+      <Outlet />
     </EnterpriseLayout>
   );
 }
