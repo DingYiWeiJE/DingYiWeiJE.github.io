@@ -17,7 +17,7 @@ export function DashboardPage() {
     setLoading(true);
     const dashboardData = await mockDataService.fetchData(
       mockDataService.getDashboardData(),
-      800
+      20
     );
     setData(dashboardData);
     setLoading(false);
@@ -30,7 +30,7 @@ export function DashboardPage() {
       setLoading(true);
       const dashboardData = await mockDataService.fetchData(
         mockDataService.getDashboardData(),
-        800
+        20
       );
       if (isMounted) {
         setData(dashboardData);
@@ -39,13 +39,6 @@ export function DashboardPage() {
     };
 
     loadData();
-
-    // 模拟实时更新（每30秒）
-    const interval = setInterval(loadData, 30000);
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
   }, []);
 
   if (loading || !data) {
