@@ -5,7 +5,6 @@ import { Container } from './Container';
 
 const navItems = [
   { label: '项目', to: '/projects' },
-  { label: '实验室', to: '/labs' },
   { label: '开源', to: '/open-source' },
   { label: '关于', to: '/about' },
   { label: '联系', to: '/contact' },
