@@ -65,20 +65,6 @@ export function EnterpriseLayout({
 
       {/* 主内容区 */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* 桌面端顶部栏 */}
-        <div className="hidden h-14 items-center justify-between border-b border-slate-800 bg-slate-900 px-6 md:flex">
-          <h1 className="text-lg font-semibold text-white">企业可视化系统</h1>
-          <button
-            onClick={handleExit}
-            className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
-            aria-label="退出"
-            title="返回首页"
-          >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
 
         {/* 移动端顶部栏 */}
         <div className="flex h-14 items-center justify-between border-b border-slate-800 bg-slate-900 px-4 md:hidden">
