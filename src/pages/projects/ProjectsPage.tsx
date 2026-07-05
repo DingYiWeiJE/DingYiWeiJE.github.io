@@ -1,10 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { EnterpriseLayout } from '../../components/visualization/EnterpriseLayout';
 import { DashboardPage } from './modules/dashboard/DashboardPage';
+import { useLayout } from '../../contexts/LayoutContext';
 import type { ModuleType } from '../../types/visualization';
 
 export function ProjectsPage() {
   const [currentModule, setCurrentModule] = useState<ModuleType>('dashboard');
+  const { setShowHeader, setShowFooter } = useLayout();
+
+  useEffect(() => {
+    // 进入页面时隐藏 Header 和 Footer
+    setShowHeader(false);
+    setShowFooter(false);
+
+    // 离开页面时恢复显示
+    return () => {
+      setShowHeader(true);
+      setShowFooter(true);
+    };
+  }, [setShowHeader, setShowFooter]);
 
   return (
     <EnterpriseLayout

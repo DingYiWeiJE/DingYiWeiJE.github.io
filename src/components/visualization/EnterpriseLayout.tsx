@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Sidebar } from './Sidebar';
 import { NAVIGATION_MENU } from '../../config/navigation';
 
@@ -16,14 +17,19 @@ export function EnterpriseLayout({
 }: EnterpriseLayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleModuleSelect = (moduleId: string) => {
     onModuleChange?.(moduleId);
     setMobileSidebarOpen(false); // 移动端选择后自动关闭
   };
 
+  const handleExit = () => {
+    navigate('/');
+  };
+
   return (
-    <div className="flex h-[calc(100vh-4rem)] overflow-hidden bg-slate-950">
+    <div className="flex h-screen overflow-hidden bg-slate-950">
       {/* 移动端遮罩 */}
       {mobileSidebarOpen && (
         <div
@@ -59,6 +65,21 @@ export function EnterpriseLayout({
 
       {/* 主内容区 */}
       <div className="flex flex-1 flex-col overflow-hidden">
+        {/* 桌面端顶部栏 */}
+        <div className="hidden h-14 items-center justify-between border-b border-slate-800 bg-slate-900 px-6 md:flex">
+          <h1 className="text-lg font-semibold text-white">企业可视化系统</h1>
+          <button
+            onClick={handleExit}
+            className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+            aria-label="退出"
+            title="返回首页"
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
         {/* 移动端顶部栏 */}
         <div className="flex h-14 items-center justify-between border-b border-slate-800 bg-slate-900 px-4 md:hidden">
           <button
@@ -71,7 +92,16 @@ export function EnterpriseLayout({
             </svg>
           </button>
           <h1 className="text-sm font-semibold text-white">企业可视化系统</h1>
-          <div className="w-10" /> {/* 占位，保持标题居中 */}
+          <button
+            onClick={handleExit}
+            className="rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white"
+            aria-label="退出"
+            title="返回首页"
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
         {/* 内容区 */}
