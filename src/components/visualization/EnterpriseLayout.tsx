@@ -91,7 +91,7 @@ export function EnterpriseLayout({
         </div>
 
         {/* 内容区 */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-950 p-4 md:p-6">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-950 p-2 md:p-2">
           {children}
         </main>
       </div>
