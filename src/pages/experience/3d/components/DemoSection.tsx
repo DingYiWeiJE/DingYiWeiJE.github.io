@@ -1,5 +1,5 @@
 import { DemoCard } from './DemoCard';
-import { ThreeJSPreview } from './ThreeJSPreview';
+import { ThreeJSPreview } from './ThreeJSPreview/ThreeJSPreview';
 import { UnityStylePreview } from './UnityStylePreview';
 import { DataVisualizationPreview } from './DataVisualizationPreview';
 
