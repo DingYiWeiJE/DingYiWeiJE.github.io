@@ -54,8 +54,8 @@ export function createRotatingCubeGroup():SceneEntity   {
   const rotationSpeed = 1.8;
 
   const tick = (deltaTime: number) => {
-    // group.rotation.y += rotationSpeed * deltaTime;
-    // group.rotation.x += rotationSpeed * deltaTime;
+    group.rotation.y += rotationSpeed * deltaTime;
+    group.rotation.x += rotationSpeed * deltaTime;
   };
 
   const dispose = () => {
