@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 interface DemoCardProps {
   demoNumber: string;
   title: string;
@@ -6,6 +8,7 @@ interface DemoCardProps {
   responsibilities: string[];
   color: 'cyan' | 'purple' | 'blue';
   imageOnLeft?: boolean;
+  preview?: ReactNode;
 }
 
 const colorMap = {
@@ -34,6 +37,7 @@ export function DemoCard({
   responsibilities,
   color,
   imageOnLeft = false,
+  preview,
 }: DemoCardProps) {
   const colors = colorMap[color];
 
@@ -71,8 +75,8 @@ export function DemoCard({
           </div>
         </div>
 
-        <div className={`relative aspect-video bg-slate-800/50 rounded-xl overflow-hidden flex items-center justify-center border border-slate-700/50 ${imageOnLeft ? 'order-1 md:order-1' : 'order-2 md:order-2'}`}>
-          <div className="text-slate-500 text-sm">Demo 预览 / 视频区域</div>
+        <div className={`relative aspect-video bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/50 ${imageOnLeft ? 'order-1 md:order-1' : 'order-2 md:order-2'}`}>
+          {preview || <div className="flex items-center justify-center h-full text-slate-500 text-sm">Demo 预览 / 视频区域</div>}
         </div>
       </div>
     </div>

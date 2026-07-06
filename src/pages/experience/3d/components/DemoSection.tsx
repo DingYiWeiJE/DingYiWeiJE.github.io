@@ -1,4 +1,7 @@
 import { DemoCard } from './DemoCard';
+import { ThreeJSPreview } from './ThreeJSPreview';
+import { UnityStylePreview } from './UnityStylePreview';
+import { DataVisualizationPreview } from './DataVisualizationPreview';
 
 const demos = [
   {
@@ -14,6 +17,7 @@ const demos = [
     ],
     color: 'cyan' as const,
     imageOnLeft: false,
+    preview: <ThreeJSPreview />,
   },
   {
     demoNumber: 'Demo 2',
@@ -28,6 +32,7 @@ const demos = [
     ],
     color: 'purple' as const,
     imageOnLeft: true,
+    preview: <UnityStylePreview />,
   },
   {
     demoNumber: 'Demo 3',
@@ -42,6 +47,7 @@ const demos = [
     ],
     color: 'blue' as const,
     imageOnLeft: false,
+    preview: <DataVisualizationPreview />,
   },
 ];
 
