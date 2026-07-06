@@ -1,5 +1,5 @@
-import { DataTable } from '../../../../../components/visualization/DataTable';
-import type { Order } from '../../../../../data/types/dashboard';
+import { DataTable } from "../../../../components/visualization";
+import type { Order } from "../../../../data/types/dashboard";
 
 interface OrdersTableProps {
   orders: Order[];

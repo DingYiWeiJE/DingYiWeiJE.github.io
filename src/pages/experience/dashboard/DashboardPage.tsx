@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Grid } from '../../../../components/visualization/Grid';
-import { Panel } from '../../../../components/visualization/Panel';
-import { StatCard } from '../../../../components/visualization/StatCard';
+import { Grid } from '../../../components/visualization/Grid';
+import { Panel } from '../../../components/visualization/Panel';
+import { StatCard } from '../../../components/visualization/StatCard';
+import { mockDataService } from '../../../services/mockDataService';
+import type { DashboardData } from '../../../data/types/dashboard';
 import { SalesTrendChart } from './components/SalesTrendChart';
 import { UserDistributionChart } from './components/UserDistributionChart';
-import { CategoryRankChart } from './components/CategoryRankChart';
 import { OrdersTable } from './components/OrdersTable';
-import { mockDataService } from '../../../../services/mockDataService';
-import type { DashboardData } from '../../../../data/types/dashboard';
+import { CategoryRankChart } from './components/CategoryRankChart';
 
 export function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);

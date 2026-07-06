@@ -1,4 +1,4 @@
-import { ReactECharts } from '../../../../../components/charts/ReactECharts';
+import { ReactECharts } from "../../../../components/charts/ReactECharts";
 
 interface UserDistributionChartProps {
   data: { name: string; value: number }[];
