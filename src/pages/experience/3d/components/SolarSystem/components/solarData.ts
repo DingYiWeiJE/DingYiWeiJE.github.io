@@ -1,3 +1,4 @@
+import { solarTextures } from './solarTextures';
 import type { CelestialBodyData } from './solarTypes';
 
 export const solarBodiesData: CelestialBodyData[] = [
@@ -16,6 +17,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '不适用',
     rotationPeriod: '约 25 至 35 天',
     moons: '不适用',
+    textureUrl: solarTextures.sun,
   },
   {
     id: 'mercury',
@@ -32,6 +34,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '约 88 天',
     rotationPeriod: '约 58.6 天',
     moons: '0 颗',
+    textureUrl: solarTextures.mercury,
   },
   {
     id: 'venus',
@@ -48,6 +51,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '约 225 天',
     rotationPeriod: '约 243 天（逆向自转）',
     moons: '0 颗',
+    textureUrl: solarTextures.venus,
   },
   {
     id: 'earth',
@@ -64,6 +68,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '365.25 天',
     rotationPeriod: '约 23.9 小时',
     moons: '1 颗',
+    textureUrl: solarTextures.earth,
   },
   {
     id: 'moon',
@@ -80,6 +85,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '约 27.3 天',
     rotationPeriod: '约 27.3 天',
     moons: '0 颗',
+    textureUrl: solarTextures.moon,
   },
   {
     id: 'mars',
@@ -96,6 +102,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '约 687 天',
     rotationPeriod: '约 24.6 小时',
     moons: '2 颗',
+    textureUrl: solarTextures.mars,
   },
   {
     id: 'jupiter',
@@ -112,6 +119,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '约 11.86 年',
     rotationPeriod: '约 9.9 小时',
     moons: '95+ 颗',
+    textureUrl: solarTextures.jupiter,
   },
   {
     id: 'saturn',
@@ -128,6 +136,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '约 29.45 年',
     rotationPeriod: '约 10.7 小时',
     moons: '140+ 颗',
+    textureUrl: solarTextures.saturn,
   },
   {
     id: 'uranus',
@@ -144,6 +153,7 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '约 84 年',
     rotationPeriod: '约 17.2 小时（逆向）',
     moons: '27 颗',
+    textureUrl: solarTextures.uranus,
   },
   {
     id: 'neptune',
@@ -160,5 +170,6 @@ export const solarBodiesData: CelestialBodyData[] = [
     orbitalPeriod: '约 164.8 年',
     rotationPeriod: '约 16.1 小时',
     moons: '14 颗',
+    textureUrl: solarTextures.neptune,
   },
 ];

@@ -48,6 +48,14 @@ export class SolarSystem {
     return body;
   }
 
+  public getInteractiveObjects() {
+    return this.bodies.map((body) => body.mesh);
+  }
+
+  public getBodyByObject(object: THREE.Object3D) {
+    return this.bodies.find((body) => body.mesh === object) ?? null;
+  }
+
   public tick(deltaTime: number, speedMultiplier: number) {
     for (const body of this.bodies) {
       body.tick(deltaTime, speedMultiplier);

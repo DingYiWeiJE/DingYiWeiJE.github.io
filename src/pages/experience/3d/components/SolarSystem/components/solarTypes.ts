@@ -14,6 +14,7 @@ export type CelestialBodyData = { //星体数据
   orbitSpeed: number;
 
   color: string;
+  textureUrl?: string;
 
   description: string;
   diameter: string;

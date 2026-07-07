@@ -57,7 +57,7 @@ export function createHeroCore(): SceneEntity {
   group.add(sphere);
 
   const rotationSpeed = 1.2;
-  let elapsedTime = 0;
+  const elapsedTime = 0;
 
   const tick = (deltaTime: number) => {
     group.rotation.y += rotationSpeed * deltaTime;

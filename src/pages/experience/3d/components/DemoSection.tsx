@@ -1,7 +1,7 @@
 import { DemoCard } from './DemoCard';
-import { ThreeJSPreview } from './ThreeJSPreview/ThreeJSPreview';
 import { UnityStylePreview } from './UnityStylePreview';
 import { DataVisualizationPreview } from './DataVisualizationPreview';
+import { SolarSystemPreview } from './SolarSystem/SolarSystemPreview';
 
 const demos = [
   {
@@ -17,7 +17,7 @@ const demos = [
     ],
     color: 'cyan' as const,
     imageOnLeft: false,
-    preview: <ThreeJSPreview />,
+    preview: <SolarSystemPreview />,
   },
   {
     demoNumber: 'Demo 2',
