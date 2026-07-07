@@ -3,7 +3,14 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export function createScene() {
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#d6dee8');
+
+  scene.background = new THREE.Color('#020617');
+  scene.fog = new THREE.Fog('#020617', 5, 14);
+  /**
+   *  离相机 5 以内：基本不受雾影响
+      从 5 到 14：逐渐被背景色融合
+      超过 14：基本接近背景色
+   */
 
   return scene;
 }
@@ -26,7 +33,10 @@ export function createCamera(container: HTMLDivElement) {
 }
 
 export function createRenderer(container: HTMLDivElement) {
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = new THREE.WebGLRenderer({ 
+    antialias: true,
+     alpha: true,
+  });
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
@@ -37,14 +47,32 @@ export function createRenderer(container: HTMLDivElement) {
   return renderer;
 }
 
-export function createControls(
-  camera: THREE.PerspectiveCamera,
-  domElement: HTMLElement
-) {
+export function createControls(camera: THREE.Camera, domElement: HTMLElement) {
+
+  /**
+   * enablePan = false
+      禁止平移，避免用户把主体拖出画面。
+
+      minDistance / maxDistance
+      限制缩放距离，避免太近穿模或太远看不清。
+
+      minPolarAngle / maxPolarAngle
+      限制上下旋转角度，避免钻到地面下面或俯视太狠。
+   */
+
   const controls = new OrbitControls(camera, domElement);
 
-  controls.target.set(0, 3, 0);
+  controls.target.set(0, 1.2, 0);
   controls.enableDamping = true;
+
+  controls.enablePan = false;
+
+  controls.minDistance = 3.2;
+  controls.maxDistance = 7;
+
+  controls.minPolarAngle = Math.PI * 0.18;
+  controls.maxPolarAngle = Math.PI * 0.48;
+
   controls.update();
 
   return controls;
