@@ -11,7 +11,7 @@ import { CameraFocusController } from './components/CameraFocusController';
 
 export function SolarSystemPreview() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const speedMultiplierRef = useRef(1);
+  const speedMultiplierRef = useRef(0.5);
   const [selectedBody, setSelectedBody] = useState<CelestialBodyData | null>(null);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export function SolarSystemPreview() {
       camera,
       solarSystem,
       onHoverChange: (body) => {
-        speedMultiplierRef.current = body ? 0.25 : 1;
+        speedMultiplierRef.current = body ? 0.15 : 0.5;
       },
       onSelect: (body) => {
         setSelectedBody(body?.data ?? null);
@@ -152,9 +152,8 @@ export function SolarSystemPreview() {
   }, []);
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-3xl bg-slate-950 md:h-[680px]">
-      <div ref={containerRef} className="h-full w-full touch-none" />
-
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div ref={containerRef} className="absolute inset-0 w-full h-full" />
       <div className="pointer-events-none absolute left-3 right-3 top-3 rounded-2xl border border-white/10 bg-black/35 p-3 text-white shadow-2xl backdrop-blur-md md:left-4 md:right-auto md:top-4 md:max-w-[360px] md:p-4">
         <div className="text-xs uppercase tracking-[0.24em] text-yellow-300">
           Three.js 太阳系
@@ -165,7 +164,7 @@ export function SolarSystemPreview() {
         </div>
 
         <div className="mt-2 text-sm leading-6 text-white/70">
-          当前阶段先验证太阳、地球和月球的层级运动结构。
+          点击星体查看详情
         </div>
       </div>
 
@@ -217,6 +216,6 @@ export function SolarSystemPreview() {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }
