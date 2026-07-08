@@ -1,324 +1,174 @@
-import { useState, useMemo } from 'react';
+import type { KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router';
-import { NAVIGATION_MENU } from '../../config/navigation';
+import { Card } from '../../components/ui/Card';
+import { Badge } from '../../components/ui/Badge';
 
-interface ModuleCard {
-  id: string;
-  label: string;
-  icon: React.ReactNode;
+interface ProjectCard {
+  slug: string;
   path: string;
+  category: string;
+  title: string;
   description: string;
-  status: 'ready' | 'developing' | 'planning';
-  tags: string[];
-  badge?: string | number;
+  techStack: string[];
+  highlights: string[];
 }
 
-const MODULE_CARDS: ModuleCard[] = [
+const PROJECTS: ProjectCard[] = [
   {
-    id: 'dashboard',
-    label: '数据驾驶舱',
-    icon: NAVIGATION_MENU[0].icon,
+    slug: 'dashboard',
     path: '/projects/dashboard',
-    description: '实时业务数据监控，包含销售趋势、用户分布、订单管理等核心指标可视化',
-    status: 'ready',
-    tags: ['数据分析', '可视化', '实时监控']
+    category: 'BI 数据可视化',
+    title: '数据驾驶舱',
+    description:
+      '面向业务经营场景的数据看板，集中展示销售趋势、订单转化、用户分布和关键指标，帮助管理者快速判断业务状态。',
+    techStack: ['React', 'TypeScript', 'ECharts', 'Tailwind CSS'],
+    highlights: [
+      '支持核心 KPI、趋势图、排行图和地域分布等多种可视化模块',
+      '围绕经营分析搭建完整的信息层级，适合大屏和后台首页展示',
+      '组件化封装图表与指标卡片，便于后续扩展更多业务模块'
+    ]
   },
   {
-    id: 'ai-platform',
-    label: 'AI数据平台',
-    icon: NAVIGATION_MENU[1].icon,
+    slug: 'ai-platform',
     path: '/projects/ai-platform',
-    description: 'AI驱动的智能数据分析平台，提供自然语言查询和智能数据洞察',
-    status: 'ready',
-    tags: ['AI', '智能分析', '自然语言'],
-    badge: 'AI助理'
+    category: 'AI 智能分析',
+    title: 'AI 数据平台',
+    description:
+      '融合自然语言交互、数据洞察和智能问答能力的分析平台，降低数据查询门槛，让用户通过对话获取业务结论。',
+    techStack: ['React', 'TypeScript', 'LLM', '数据分析'],
+    highlights: [
+      '提供自然语言提问入口，模拟从问题到图表和结论的分析流程',
+      '包含智能摘要、异常提示、推荐问题等 AI 辅助分析体验',
+      '适合展示 AI 产品界面、数据产品设计和复杂后台交互能力'
+    ]
   },
   {
-    id: 'finance',
-    label: '金融交易系统',
-    icon: NAVIGATION_MENU[2].icon,
+    slug: 'finance',
     path: '/projects/finance',
-    description: '实时股票行情、K线图表、深度图、交易监控等金融数据可视化',
-    status: 'planning',
-    tags: ['金融', '交易', 'K线']
+    category: '金融交易系统',
+    title: '金融行情与交易看板',
+    description:
+      '围绕股票行情、盘口数据、交易明细和资产概览构建的金融可视化界面，突出实时性、信息密度和专业图表表达。',
+    techStack: ['React', 'TypeScript', 'ECharts', 'WebSocket'],
+    highlights: [
+      '展示 K 线、分时走势、买卖盘、成交明细等金融高频信息',
+      '通过深色界面和高密度布局模拟专业交易终端体验',
+      '适合扩展实时推送、行情预警、组合收益分析等功能'
+    ]
   },
   {
-    id: 'mes',
-    label: '工业MES系统',
-    icon: NAVIGATION_MENU[3].icon,
+    slug: 'mes',
     path: '/projects/mes',
-    description: '制造执行系统，包含设备监控、工艺流程管理、生产告警等功能',
-    status: 'planning',
-    tags: ['工业', '制造', '设备监控']
+    category: '工业制造',
+    title: '工业 MES 系统',
+    description:
+      '面向制造执行管理的工业后台系统，覆盖生产计划、设备状态、工序流转、质量追踪和异常告警等核心场景。',
+    techStack: ['React', 'TypeScript', 'Ant Design', '工业数据'],
+    highlights: [
+      '围绕生产线、工单、设备、良率等关键对象组织页面结构',
+      '支持设备监控、生产进度、异常告警和质量分析等业务模块展示',
+      '适合体现复杂表格、状态流转、工业看板和后台系统设计能力'
+    ]
   },
   {
-    id: 'hmi',
-    label: 'HMI控制系统',
-    icon: NAVIGATION_MENU[4].icon,
+    slug: 'hmi',
     path: '/projects/hmi',
-    description: '人机交互界面，用于工业设备的实时控制和状态监控',
-    status: 'planning',
-    tags: ['控制', 'HMI', '工业']
+    category: '工业控制界面',
+    title: 'HMI 控制系统',
+    description:
+      '模拟工业现场的人机交互控制界面，用于展示设备运行状态、参数监控、流程控制和报警反馈。',
+    techStack: ['React', 'TypeScript', 'SVG', 'Canvas'],
+    highlights: [
+      '使用图形化方式表达设备状态、管线流向、控制按钮和运行参数',
+      '强调实时反馈、状态识别和操作路径，贴近工业控制台使用场景',
+      '可扩展为产线监控、能源管理、设备联动和报警处理界面'
+    ]
   },
   {
-    id: 'im',
-    label: '实时通信IM',
-    icon: NAVIGATION_MENU[5].icon,
+    slug: 'im',
     path: '/projects/im',
-    description: '企业级即时通讯系统，支持多人会话、文件传输、音视频通话',
-    status: 'planning',
-    tags: ['通信', 'IM', '实时']
+    category: '实时通信',
+    title: '企业级 IM 系统',
+    description:
+      '面向企业协作场景的即时通信界面，包含会话列表、消息流、成员信息、文件消息和多人协作体验。',
+    techStack: ['React', 'TypeScript', 'WebSocket', '状态管理'],
+    highlights: [
+      '覆盖单聊、群聊、消息状态、未读提醒和文件消息等常见 IM 场景',
+      '通过清晰的信息分区提升会话切换、消息浏览和成员管理效率',
+      '适合继续扩展音视频通话、消息搜索、表情回复和消息撤回功能'
+    ]
   },
   {
-    id: '3d',
-    label: '三维可视化',
-    icon: NAVIGATION_MENU[6].icon,
+    slug: '3d',
     path: '/projects/3d',
-    description: '基于 WebGL 的三维数据可视化平台，支持场景漫游和交互',
-    status: 'planning',
-    tags: ['3D', 'WebGL', '可视化']
+    category: '三维可视化',
+    title: 'Web 3D 可视化平台',
+    description:
+      '基于浏览器端三维渲染能力构建的可视化展示项目，可用于园区、工厂、设备、机房等空间场景的交互式呈现。',
+    techStack: ['React', 'Three.js', 'WebGL', 'TypeScript'],
+    highlights: [
+      '支持三维场景浏览、对象选中、信息浮层和空间数据展示',
+      '适合展示数字孪生、园区管理、设备监控和空间可视化能力',
+      '可继续扩展模型加载、动画巡检、热点标注和实时数据联动'
+    ]
   }
 ];
 
-const STATUS_CONFIG = {
-  ready: { label: '已完成', color: 'text-green-400 bg-green-400/10 border-green-400/20' },
-  developing: { label: '开发中', color: 'text-blue-400 bg-blue-400/10 border-blue-400/20' },
-  planning: { label: '规划中', color: 'text-slate-400 bg-slate-400/10 border-slate-400/20' }
-};
-
 export function ProjectsIndexPage() {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState<string>('all');
 
-  // 加载最近访问记录（初始化）
-  const [recentVisits, setRecentVisits] = useState<string[]>(() => {
-    const stored = localStorage.getItem('projects_recent_visits');
-    if (stored) {
-      try {
-        return JSON.parse(stored);
-      } catch (e) {
-        console.error('Failed to load recent visits:', e);
-        return [];
-      }
-    }
-    return [];
-  });
-
-  // 筛选模块
-  const filteredModules = useMemo(() => {
-    return MODULE_CARDS.filter(module => {
-      const matchesSearch =
-        module.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        module.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        module.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-
-      const matchesStatus = selectedStatus === 'all' || module.status === selectedStatus;
-
-      return matchesSearch && matchesStatus;
-    });
-  }, [searchQuery, selectedStatus]);
-
-  // 处理卡片点击
-  const handleCardClick = (module: ModuleCard) => {
-    // 更新最近访问
-    const newRecentVisits = [module.id, ...recentVisits.filter(id => id !== module.id)].slice(0, 5);
-    setRecentVisits(newRecentVisits);
-    localStorage.setItem('projects_recent_visits', JSON.stringify(newRecentVisits));
-
-    navigate(module.path);
+  const handleProjectOpen = (project: ProjectCard) => {
+    navigate(project.path);
   };
 
-  // 获取最近访问的模块
-  const recentModules = useMemo(() => {
-    return recentVisits
-      .map(id => MODULE_CARDS.find(m => m.id === id))
-      .filter(Boolean) as ModuleCard[];
-  }, [recentVisits]);
+  const handleProjectKeyDown = (
+    event: KeyboardEvent<HTMLDivElement>,
+    project: ProjectCard
+  ) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleProjectOpen(project);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-950 p-4 md:p-8">
-      <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white md:text-4xl">
-            项目展示
-          </h1>
-          <p className="mt-2 text-slate-400">
-            浏览我的可视化项目集合，涵盖数据分析、AI平台、工业系统等多个领域
-          </p>
-        </div>
+    <main className="projects-page">
+      <section className="projects-hero">
+        <p className="section-kicker">Project Gallery</p>
+        <h1>项目展示</h1>
+        <p>
+          精选多个前端可视化与后台系统项目，覆盖数据分析、AI 平台、金融交易、工业制造、实时通信和三维可视化等方向。
+        </p>
+      </section>
 
-        {/* 搜索和筛选 */}
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          {/* 搜索框 */}
-          <div className="relative flex-1 md:max-w-md">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <svg className="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="搜索项目、标签..."
-              className="w-full rounded-lg border border-slate-700 bg-slate-900 py-2 pl-10 pr-4 text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            />
-          </div>
+      <section className="projects-grid" aria-label="项目列表">
+        {PROJECTS.map((project) => (
+          <Card
+            key={project.slug}
+            className="project-card"
+            role="button"
+            tabIndex={0}
+            onClick={() => handleProjectOpen(project)}
+            onKeyDown={(event) => handleProjectKeyDown(event, project)}
+          >
+            <p className="card-kicker">{project.category}</p>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
 
-          {/* 状态筛选 */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => setSelectedStatus('all')}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                selectedStatus === 'all'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              全部
-            </button>
-            <button
-              onClick={() => setSelectedStatus('ready')}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                selectedStatus === 'ready'
-                  ? 'bg-green-500 text-white'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              已完成
-            </button>
-            <button
-              onClick={() => setSelectedStatus('planning')}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                selectedStatus === 'planning'
-                  ? 'bg-slate-500 text-white'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              规划中
-            </button>
-          </div>
-        </div>
-
-        {/* 最近访问 */}
-        {recentModules.length > 0 && (
-          <div className="mb-8">
-            <h2 className="mb-4 text-lg font-semibold text-white">最近访问</h2>
-            <div className="flex gap-3 overflow-x-auto pb-2">
-              {recentModules.map((module) => (
-                <button
-                  key={module.id}
-                  onClick={() => handleCardClick(module)}
-                  className="group flex min-w-[200px] items-center gap-3 rounded-lg border border-slate-700 bg-slate-800/50 px-4 py-3 transition-all hover:border-blue-500 hover:bg-slate-800"
-                >
-                  <div className="flex-shrink-0 text-slate-400 transition-colors group-hover:text-blue-400">
-                    {module.icon}
-                  </div>
-                  <div className="text-left">
-                    <div className="text-sm font-medium text-white">{module.label}</div>
-                    <div className={`text-xs ${STATUS_CONFIG[module.status].color.split(' ')[0]}`}>
-                      {STATUS_CONFIG[module.status].label}
-                    </div>
-                  </div>
-                </button>
+            <div className="card-badges">
+              {project.techStack.map((tech) => (
+                <Badge key={tech}>{tech}</Badge>
               ))}
             </div>
-          </div>
-        )}
 
-        {/* 项目卡片网格 */}
-        {filteredModules.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredModules.map((module) => (
-              <button
-                key={module.id}
-                onClick={() => handleCardClick(module)}
-                className="group relative overflow-hidden rounded-xl border border-slate-700 bg-slate-900 p-6 text-left transition-all hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/10"
-              >
-                {/* 状态标签 */}
-                <div className="absolute right-4 top-4">
-                  <span className={`rounded-full border px-2 py-1 text-xs font-medium ${STATUS_CONFIG[module.status].color}`}>
-                    {STATUS_CONFIG[module.status].label}
-                  </span>
-                </div>
-
-                {/* Badge（如果有） */}
-                {module.badge && (
-                  <div className="absolute left-4 top-4">
-                    <span className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-2 py-1 text-xs font-medium text-white">
-                      {module.badge}
-                    </span>
-                  </div>
-                )}
-
-                {/* 图标 */}
-                <div className="mb-4 mt-8 inline-flex rounded-lg bg-slate-800 p-3 text-slate-400 transition-all group-hover:bg-blue-500 group-hover:text-white">
-                  {module.icon}
-                </div>
-
-                {/* 标题 */}
-                <h3 className="mb-2 text-xl font-semibold text-white transition-colors group-hover:text-blue-400">
-                  {module.label}
-                </h3>
-
-                {/* 描述 */}
-                <p className="mb-4 text-sm text-slate-400 line-clamp-2">
-                  {module.description}
-                </p>
-
-                {/* 标签 */}
-                <div className="flex flex-wrap gap-2">
-                  {module.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-md bg-slate-800 px-2 py-1 text-xs text-slate-300"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* 箭头图标 */}
-                <div className="absolute bottom-4 right-4 text-slate-600 transition-all group-hover:translate-x-1 group-hover:text-blue-400">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </button>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-16 text-center">
-            <svg className="mb-4 h-16 w-16 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-lg text-slate-400">未找到匹配的项目</p>
-            <p className="mt-1 text-sm text-slate-500">请尝试其他搜索关键词或筛选条件</p>
-          </div>
-        )}
-
-        {/* 统计信息 */}
-        <div className="mt-12 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-            <div className="text-2xl font-bold text-white">{MODULE_CARDS.length}</div>
-            <div className="text-sm text-slate-400">总项目数</div>
-          </div>
-          <div className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-            <div className="text-2xl font-bold text-green-400">
-              {MODULE_CARDS.filter(m => m.status === 'ready').length}
-            </div>
-            <div className="text-sm text-slate-400">已完成</div>
-          </div>
-          <div className="rounded-lg border border-slate-700 bg-slate-900 p-4">
-            <div className="text-2xl font-bold text-blue-400">
-              {MODULE_CARDS.filter(m => m.status === 'planning').length}
-            </div>
-            <div className="text-sm text-slate-400">规划中</div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <ul>
+              {project.highlights.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </Card>
+        ))}
+      </section>
+    </main>
   );
 }

@@ -140,15 +140,6 @@ export function Header() {
                 </NavLink>
               ))}
             </nav>
-
-            <div className="mt-3 rounded-2xl border border-cyan-300/20 bg-cyan-400/10 p-4">
-              <p className="text-sm font-medium text-cyan-100">
-                Developer Portfolio 正在持续升级中
-              </p>
-              <p className="mt-1 text-xs leading-5 text-slate-400">
-                后续会接入 Three.js、D3.js、Canvas、Unity WebGL、开源项目和技术博客。
-              </p>
-            </div>
           </div>
         </>
       ) : null}
