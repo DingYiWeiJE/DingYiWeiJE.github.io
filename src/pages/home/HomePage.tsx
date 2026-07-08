@@ -66,7 +66,7 @@ export function HomePage() {
 
   return (
     <div className="home-page fade-in">
-      <section className="hero-section">
+      <section id="home" className="hero-section">
         <Container className="hero-section__inner">
           <div className="hero-section__content">
             <p className="hero-section__eyebrow">
@@ -120,7 +120,7 @@ export function HomePage() {
 
       <FeaturedProjectsSection projects={featuredProjects} />
 
-      <section className="section">
+      <section id="expertise" className="section">
         <Container>
           <SectionHeading
             eyebrow="专业技能"
@@ -140,7 +140,7 @@ export function HomePage() {
         </Container>
       </section>
 
-      <section className="section">
+      <section id="open-source" className="section">
         <Container>
           <SectionHeading
             eyebrow="开源项目"
@@ -170,7 +170,7 @@ export function HomePage() {
         </Container>
       </section>
 
-      <section className="section contact-cta-section">
+      <section id="contact" className="section contact-cta-section">
         <Container>
           <Card className="contact-cta-card">
             <p className="card-kicker">联系方式</p>

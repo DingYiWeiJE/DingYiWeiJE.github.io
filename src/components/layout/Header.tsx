@@ -1,19 +1,47 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 
 import { Container } from './Container';
 
 const navItems = [
-  { label: '项目', to: '/projects' },
-  { label: '开源', to: '/open-source' },
-  { label: '关于', to: '/about' },
-  { label: '联系', to: '/contact' },
+  { label: '首页', to: '/', anchor: 'home' },
+  { label: '项目', to: '/projects', anchor: 'projects' },
+  { label: '技术栈', to: '/expertise', anchor: 'expertise' },
+  { label: '开源', to: '/open-source', anchor: 'open-source' },
+  { label: '联系', to: '/contact', anchor: 'contact' },
 ];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHomePage = location.pathname === '/';
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, anchor: string) => {
+    if (isHomePage) {
+      e.preventDefault();
+      closeMenu();
+
+      const element = document.getElementById(anchor);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      e.preventDefault();
+      closeMenu();
+      navigate('/');
+
+      // 延迟滚动，等待页面加载
+      setTimeout(() => {
+        const element = document.getElementById(anchor);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  };
 
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -59,21 +87,16 @@ export function Header() {
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="主导航">
           {navItems.map((item) => (
-            <NavLink
+            <a
               key={item.to}
-              to={item.to}
-              onClick={closeMenu}
-              className={({ isActive }) =>
-                [
-                  'rounded-full px-3 py-2 text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-cyan-400/10 text-cyan-200 ring-1 ring-cyan-300/20'
-                    : 'text-slate-300 hover:bg-white/5 hover:text-white',
-                ].join(' ')
+              href={`#${item.anchor}`}
+              onClick={(e) => handleNavClick(e, item.anchor)}
+              className={
+                'rounded-full px-3 py-2 text-sm font-medium transition-colors text-slate-300 hover:bg-white/5 hover:text-white'
               }
             >
               {item.label}
-            </NavLink>
+            </a>
           ))}
         </nav>
 
@@ -123,21 +146,16 @@ export function Header() {
           >
             <nav className="space-y-2" aria-label="移动端导航">
               {navItems.map((item) => (
-                <NavLink
+                <a
                   key={item.to}
-                  to={item.to}
-                  onClick={closeMenu}
-                  className={({ isActive }) =>
-                    [
-                      'block rounded-2xl border px-4 py-3 text-sm font-semibold transition-colors',
-                      isActive
-                        ? 'border-cyan-300/30 bg-cyan-400/10 text-cyan-100'
-                        : 'border-white/10 bg-white/[0.03] text-slate-200 hover:border-white/20 hover:bg-white/[0.06]',
-                    ].join(' ')
+                  href={`#${item.anchor}`}
+                  onClick={(e) => handleNavClick(e, item.anchor)}
+                  className={
+                    'block rounded-2xl border px-4 py-3 text-sm font-semibold transition-colors border-white/10 bg-white/[0.03] text-slate-200 hover:border-white/20 hover:bg-white/[0.06]'
                   }
                 >
                   {item.label}
-                </NavLink>
+                </a>
               ))}
             </nav>
           </div>

@@ -14,9 +14,6 @@ const MESPage = lazy(() => import('../../pages/experience/mes/MESPage').then(m =
 const HMIPage = lazy(() => import('../../pages/experience/hmi/HMIPage').then(m => ({ default: m.HMIPage })));
 const IMPage = lazy(() => import('../../pages/experience/im/IMPage').then(m => ({ default: m.IMPage })));
 const ThreeDPage = lazy(() => import('../../pages/experience/3d/ThreeDPage').then(m => ({ default: m.ThreeDPage })));
-const OpenSourcePage = lazy(() => import('../../pages/open-source/OpenSourcePage').then(m => ({ default: m.OpenSourcePage })));
-const AboutPage = lazy(() => import('../../pages/about/AboutPage').then(m => ({ default: m.AboutPage })));
-const ContactPage = lazy(() => import('../../pages/contact/ContactPage').then(m => ({ default: m.ContactPage })));
 const NotFoundPage = lazy(() => import('../../pages/not-found/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 
 // 加载中组件
@@ -50,9 +47,6 @@ export function AppRoutes() {
           <Route path="3d" element={<Suspense fallback={<PageLoader />}><ThreeDPage /></Suspense>} />
         </Route>
 
-        <Route path="open-source" element={<Suspense fallback={<PageLoader />}><OpenSourcePage /></Suspense>} />
-        <Route path="about" element={<Suspense fallback={<PageLoader />}><AboutPage /></Suspense>} />
-        <Route path="contact" element={<Suspense fallback={<PageLoader />}><ContactPage /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFoundPage /></Suspense>} />
       </Route>
     </Routes>

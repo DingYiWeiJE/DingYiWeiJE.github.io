@@ -18,7 +18,7 @@ export function FeaturedProjectsSection({
   description = '一个专注于实时、可视化、跨平台和重交互工程的精选作品集。',
 }: FeaturedProjectsSectionProps) {
   return (
-    <section className="section">
+    <section id="projects" className="section">
       <Container>
         <SectionHeading
           eyebrow={eyebrow}
