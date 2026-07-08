@@ -15,16 +15,25 @@ export function ProjectsPage() {
   )?.id || '';
 
   useEffect(() => {
-    // 进入页面时隐藏 Header 和 Footer
-    setShowHeader(false);
-    setShowFooter(false);
+    // 只在子页面隐藏 Header 和 Footer
+    const isIndexPage = location.pathname === '/projects' || location.pathname === '/projects/';
+
+    if (isIndexPage) {
+      // 在首页时显示 Header 和 Footer
+      setShowHeader(true);
+      setShowFooter(true);
+    } else {
+      // 在子页面时隐藏 Header 和 Footer
+      setShowHeader(false);
+      setShowFooter(false);
+    }
 
     // 离开页面时恢复显示
     return () => {
       setShowHeader(true);
       setShowFooter(true);
     };
-  }, [setShowHeader, setShowFooter]);
+  }, [location.pathname, setShowHeader, setShowFooter]);
 
   // 处理模块切换
   const handleModuleChange = (moduleId: string) => {

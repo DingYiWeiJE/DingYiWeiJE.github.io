@@ -5,6 +5,7 @@ import { Card } from '../../components/ui/Card';
 import { SectionHeading } from '../../components/ui/SectionHeading';
 import { projects } from '../../features/projects/data/projects';
 import { openSourcePackages } from '../../features/open-source/data/packages';
+import { FeaturedProjectsSection } from '../../features/projects/components/FeaturedProjectsSection';
 
 const techStack = [
   'React',
@@ -117,37 +118,7 @@ export function HomePage() {
         </Container>
       </section>
 
-      <section className="section">
-        <Container>
-          <SectionHeading
-            eyebrow="精选作品"
-            title="围绕复杂前端问题构建的精选项目。"
-            description="一个专注于实时、可视化、跨平台和重交互工程的精选作品集。"
-          />
-
-          <div className="project-grid">
-            {featuredProjects.map((project) => (
-              <Card key={project.slug} className="project-card">
-                <p className="card-kicker">{project.category}</p>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-
-                <div className="card-badges">
-                  {project.techStack.map((tech) => (
-                    <Badge key={tech}>{tech}</Badge>
-                  ))}
-                </div>
-
-                <ul>
-                  {project.highlights.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <FeaturedProjectsSection projects={featuredProjects} />
 
       <section className="section">
         <Container>
