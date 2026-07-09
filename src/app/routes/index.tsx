@@ -14,6 +14,7 @@ const MESPage = lazy(() => import('../../pages/experience/mes/MESPage').then(m =
 const HMIPage = lazy(() => import('../../pages/experience/hmi/HMIPage').then(m => ({ default: m.HMIPage })));
 const IMPage = lazy(() => import('../../pages/experience/im/IMPage').then(m => ({ default: m.IMPage })));
 const ThreeDPage = lazy(() => import('../../pages/experience/3d/ThreeDPage').then(m => ({ default: m.ThreeDPage })));
+const AnnotatorPage = lazy(() => import('../../pages/experience/annotator/AnnotatorPage').then(m => ({ default: m.AnnotatorPage })));
 const NotFoundPage = lazy(() => import('../../pages/not-found/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 
 // 加载中组件
@@ -45,6 +46,7 @@ export function AppRoutes() {
           <Route path="hmi" element={<Suspense fallback={<PageLoader />}><HMIPage /></Suspense>} />
           <Route path="im" element={<Suspense fallback={<PageLoader />}><IMPage /></Suspense>} />
           <Route path="3d" element={<Suspense fallback={<PageLoader />}><ThreeDPage /></Suspense>} />
+          <Route path="annotator" element={<Suspense fallback={<PageLoader />}><AnnotatorPage /></Suspense>} />
         </Route>
 
         <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFoundPage /></Suspense>} />

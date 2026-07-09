@@ -76,7 +76,7 @@ export function useTrainingSimulation(initialTask: TrainingTask | null) {
         clearInterval(intervalRef.current);
       }
     };
-  }, [simulatedTask?.status]);
+  }, [simulatedTask]);
 
   return simulatedTask;
 }

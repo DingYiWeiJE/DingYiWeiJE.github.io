@@ -1,11 +1,12 @@
+import { useNavigate } from 'react-router';
 import { Container } from '../../components/layout/Container';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { SectionHeading } from '../../components/ui/SectionHeading';
-import { projects } from '../../features/projects/data/projects';
 import { openSourcePackages } from '../../features/open-source/data/packages';
 import { FeaturedProjectsSection } from '../../features/projects/components/FeaturedProjectsSection';
+import { projects } from '../../features/projects/data/projects';
 
 const techStack = [
   'React',
@@ -62,7 +63,14 @@ const expertise = [
 ];
 
 export function HomePage() {
-  const featuredProjects = projects.filter((project) => project.featured);
+  const navigate = useNavigate();
+
+  const handleScrollTo = (anchor: string) => {
+    const element = document.getElementById(anchor);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <div className="home-page fade-in">
@@ -84,11 +92,11 @@ export function HomePage() {
             </p>
 
             <div className="hero-section__actions">
-              <Button href="/projects">View Projects</Button>
-              <Button href="/open-source" variant="secondary">
+              <Button onClick={() => navigate('/projects')}>View Projects</Button>
+              <Button onClick={() => handleScrollTo('open-source')} variant="secondary">
                 Open Source
               </Button>
-              <Button href="/contact" variant="ghost">
+              <Button onClick={() => handleScrollTo('contact')} variant="ghost">
                 Contact Me
               </Button>
             </div>
@@ -118,7 +126,7 @@ export function HomePage() {
         </Container>
       </section>
 
-      <FeaturedProjectsSection projects={featuredProjects} />
+      <FeaturedProjectsSection projects={projects} />
 
       <section id="expertise" className="section">
         <Container>
@@ -183,9 +191,6 @@ export function HomePage() {
             <div className="hero-section__actions">
               <Button href="https://github.com/dingyiweije" target="_blank" rel="noreferrer">
                 GitHub
-              </Button>
-              <Button href="/contact" variant="secondary">
-                Contact Me
               </Button>
             </div>
           </Card>

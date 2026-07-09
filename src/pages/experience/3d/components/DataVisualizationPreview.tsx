@@ -84,12 +84,15 @@ export function DataVisualizationPreview() {
 
     window.addEventListener('resize', handleResize);
 
+    const currentContainer = containerRef.current;
+    const currentRenderer = rendererRef.current;
+
     return () => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
-      if (rendererRef.current && containerRef.current) {
-        containerRef.current.removeChild(rendererRef.current.domElement);
-        rendererRef.current.dispose();
+      if (currentRenderer && currentContainer) {
+        currentContainer.removeChild(currentRenderer.domElement);
+        currentRenderer.dispose();
       }
     };
   }, []);

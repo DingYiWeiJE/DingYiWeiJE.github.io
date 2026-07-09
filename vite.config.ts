@@ -1,7 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+// import path from 'path'
 
 export default defineConfig({
+  // resolve: {
+  //   alias: {
+  //     '@': path.resolve(__dirname, './src'),
+  //     react: path.resolve('./node_modules/react'),
+  //     'react-dom': path.resolve('./node_modules/react-dom'),
+  //     'react-vision-annotator': path.resolve(__dirname, '../react-vision-annotator/src'),
+  //     konva: path.resolve('./node_modules/konva'),
+  //     'react-konva': path.resolve('./node_modules/react-konva'),
+  //   },
+  //   dedupe: ['react', 'react-dom']
+  // },
   plugins: [react()],
   build: {
     target: ['es2018', 'chrome80'],
@@ -35,6 +47,7 @@ export default defineConfig({
     // 使用默认的压缩器（Vite 8 使用 Oxc）
     // 生成 sourcemap 用于生产环境调试（可选）
     sourcemap: false,
+    
   },
   // 优化依赖预构建
   optimizeDeps: {
