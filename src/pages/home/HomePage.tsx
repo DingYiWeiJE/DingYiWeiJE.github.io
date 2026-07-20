@@ -7,6 +7,7 @@ import { SectionHeading } from '../../components/ui/SectionHeading';
 import { openSourcePackages } from '../../features/open-source/data/packages';
 import { FeaturedProjectsSection } from '../../features/projects/components/FeaturedProjectsSection';
 import { projects } from '../../features/projects/data/projects';
+import { useEffect } from 'react';
 
 const techStack = [
   'React',
