@@ -8,7 +8,7 @@ export default defineConfig({
   //     '@': path.resolve(__dirname, './src'),
   //     react: path.resolve('./node_modules/react'),
   //     'react-dom': path.resolve('./node_modules/react-dom'),
-  //     'react-vision-annotator': path.resolve(__dirname, '../react-vision-annotator/src'),
+  //     'react-labele-me': path.resolve(__dirname, '../react-labele-me/src'),
   //     konva: path.resolve('./node_modules/konva'),
   //     'react-konva': path.resolve('./node_modules/react-konva'),
   //   },

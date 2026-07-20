@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { AnnotationCanvas, ToolMode, type AnnotationCanvasRef, type AnnotationData } from "react-vision-annotator";
+import { AnnotationCanvas, ToolMode, type AnnotationCanvasRef, type AnnotationData } from "react-labele-me";
 import { ToolButtons } from "./components/ToolButtons";
 import { AnnotationPanel } from "./components/AnnotationPanel";
 import exampleImage from "./components/assets/example.jpg";

@@ -1,4 +1,4 @@
-import { ToolMode } from "react-vision-annotator";
+import { ToolMode } from "react-labele-me";
 import type { ReactElement } from "react";
 
 interface ToolButtonsProps {

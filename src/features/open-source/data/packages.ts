@@ -8,12 +8,12 @@ export type OpenSourcePackage = {
 
 export const openSourcePackages: OpenSourcePackage[] = [
   {
-    name: 'react-vision-annotator',
+    name: 'react-labele-me',
     description:
       '一个基于 React 的视觉标注工具包，用于图像标记、形状编辑和交互式标注工作流。',
-    installCommand: 'npm install react-vision-annotator',
+    installCommand: 'npm install react-labele-me',
     techStack: ['React', 'Canvas', 'TypeScript'],
-    npmUrl: 'https://www.npmjs.com/package/react-vision-annotator',
+    npmUrl: 'https://www.npmjs.com/package/react-labele-me',
   },
   {
     name: '@context-menu-kit/react',

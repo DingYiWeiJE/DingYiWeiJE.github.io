@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { AnnotationData } from 'react-vision-annotator';
+import type { AnnotationData } from 'react-labele-me';
 
 // 自定义图标组件
 const EyeIcon = ({ className }: { className?: string }) => (
