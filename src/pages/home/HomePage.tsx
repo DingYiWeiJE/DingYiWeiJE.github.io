@@ -72,6 +72,21 @@ export function HomePage() {
     }
   };
 
+  useEffect(() => {
+    fetch('https://hanlyenergy.tech/wp-json/wp/v2/posts')
+    .then(response => {
+      // 判断请求是否成功
+      if (!response.ok) throw new Error(`请求失败：${response.status}`);
+      return response.json();
+    })
+    .then(data => {
+      console.log('获取数据成功', data);
+    })
+    .catch(err => {
+      console.error('请求报错：', err);
+    });
+  }, []);
+
   return (
     <div className="home-page fade-in">
       <section id="home" className="hero-section">
